@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\EntityHydrationMethod;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -11,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    use EntityHydrationMethod;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -20,26 +24,31 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\NotNull()
      */
     private $orderCode;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
      */
     private $productId;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull()
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotNull()
      */
     private $address;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotNull()
      */
     private $shippingDate;
 
