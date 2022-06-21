@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @method string getUserIdentifier()
  */
 class User implements UserInterface, \Serializable
 {
@@ -49,8 +50,6 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
         $this->orders = new ArrayCollection();
     }
 
@@ -132,5 +131,10 @@ class User implements UserInterface, \Serializable
         }
 
         return $this;
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }
