@@ -47,7 +47,7 @@ class Order
     private $address;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @Assert\NotNull()
      */
     private $shippingDate;

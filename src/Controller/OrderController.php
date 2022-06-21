@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,6 +122,9 @@ class OrderController extends AbstractController
             if ($user->getId() !== $order->getUser()->getId())
                 throw new \Exception("This order is not yours!");
 
+            if($order->getShippingDate() < new DateTime("now") )
+                throw new \Exception("You cannot update this order because its shipping date has passed!");
+
 
             //hydrate to params
             $order->fromArray($params);
@@ -128,10 +132,10 @@ class OrderController extends AbstractController
             $em->persist($order);
             $em->flush();
 
-            return $this->json(['success' => true,'messages'=>'Order updated.']);
+            return $this->json(['success' => true,'message'=>'Order updated.']);
 
         } catch (\Exception $e) {
-            return $this->json(['success' => false, 'messages' => $e->getMessage()]);
+            return $this->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }
