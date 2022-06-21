@@ -7,7 +7,6 @@ EXPOSE 443
 
 ENV HOME /root
 
-s
 RUN apt-get dist-upgrade
 RUN apt-get update
 RUN apt-get install -y language-pack-en
@@ -26,15 +25,14 @@ RUN apt-get install -y curl wget imagemagick
 # Configure repos
 RUN add-apt-repository -y ppa:nginx/stable
 RUN add-apt-repository -y ppa:ondrej/php
-RUN apt-get update
-RUN apt-get install php-mysql
+RUN apt update
+RUN apt-get -y install php-mysql
 
 RUN apt install -y netcat
-RUN apt-get install -y nginx net-tools php7.3-dev php-pear php7.3-fpm php7.3-mysql php7.3-xdebug php7.3-xml php7.3-curl php7.3-gd php7.3-json php7.3-cli php7.3-curl php7.3-soap php7.3-intl php7.3-bcmath php7.3-mbstring php7.3-zip
+RUN apt-get install -y nginx net-tools php7.3-dev php7.3-fpm php7.3-mysql php7.3-xdebug php7.3-xml php7.3-curl php7.3-gd php7.3-json php7.3-cli php7.3-curl php7.3-soap php7.3-intl php7.3-bcmath php7.3-mbstring php7.3-zip
 RUN apt-get -y install gcc make autoconf libc-dev pkg-config
 RUN apt-get -y install zlib1g-dev
 RUN apt-get -y install libmemcached-dev
-RUN apt-get -y install memcached unzip php-memcached php7.3-memcache php7.3-memcached
 RUN apt-get -y install git
 RUN apt-get -y install fish
 RUN apt-get -y install mc
