@@ -64,7 +64,7 @@ class OrderController extends AbstractController
 
     /**
      * Create new order
-     * @Route("/api/orders/{order}", name="api_orders_store", methods={"GET"})
+     * @Route("/api/orders", name="api_orders_store", methods={"POST"})
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
