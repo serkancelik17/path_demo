@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use DateTime;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +15,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OrderController extends AbstractController
 {
+    /** @var EntityManager */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * List all Orders
      * @Route("/api/orders", name="api_orders_index", methods={"GET"})
@@ -76,9 +87,8 @@ class OrderController extends AbstractController
 
             $params = json_decode($request->getContent(), true);
             $shippingDate = new \DateTime('@'.strtotime($params['shippingDate']));
-            $em = $this->getDoctrine()->getManager();
 
-            if($em->getRepository(Order::class)->findOneBy(['orderCode'=>$params['orderCode']]))
+            if($this->entityManager->getRepository(Order::class)->findOneBy(['orderCode'=>$params['orderCode']]))
                 throw new \Exception($params['orderCode'].' already created!');
 
             $order = new Order();
@@ -94,8 +104,8 @@ class OrderController extends AbstractController
                 throw new \Exception('Order not valid! Make sure all field is filled.');
             }
 
-            $em->persist($order);
-            $em->flush();
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
 
             return $this->json(['success' => true, 'message' => 'Order created!']);
 
@@ -114,7 +124,7 @@ class OrderController extends AbstractController
     public function update(Request $request,Order $order)
     {
         try {
-            $em = $this->getDoctrine()->getManager();
+            $this->entityManager = $this->getDoctrine()->getManager();
             $user = $this->getUser();
             $params = json_decode($request->getContent(), true);
 
@@ -129,8 +139,8 @@ class OrderController extends AbstractController
             //hydrate to params
             $order->fromArray($params);
 
-            $em->persist($order);
-            $em->flush();
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
 
             return $this->json(['success' => true,'message'=>'Order updated.']);
 
