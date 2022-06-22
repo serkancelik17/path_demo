@@ -35,16 +35,31 @@ cd /var/www
 composer install
 
 ```
+Kodu test etmek için
+
+```shell script
+php bin/phpunit
+```
 
 ## Kullanım
 
-API Endpointleri
+### Müşteri Kullanıcı Bilgileri
 
 
-| Endpoint         | Method | Açıklama                                  |
-| ------------------ | -------- | --------------------------------------------- |
-| /api/login_check | POST   | JWT token için kullanılır.             |
-| /api/orders      | GET    | Tüm siparişleri listeler. |
-| /api/orders/{order} | GET   | Bir siparişin detaylarını gösterir  |
-| /api/orders       | POST  | Yeni bir sipariş oluşturur.   |   
-| /api/orders/{order} | PUT | Siparişi günceller. |
+| Kullanıcı Adı | Şifre |
+| ------------------ | -------- |
+| client1          |    t6q7g8m27xwrcizo    |
+| client2          |    wjrbr8jc9vuplpzy    |
+| client3          |    j6vmk8y43i7z75bk    |
+
+
+### API Endpointleri
+
+
+| Endpoint            | Method | Açıklama                             |
+| --------------------- | -------- | ---------------------------------------- |
+| /api/login_check    | POST   | JWT token için kullanılır.          |
+| /api/orders         | GET    | Tüm siparişleri listeler.            |
+| /api/orders/{order} | GET    | Bir siparişin detaylarını gösterir |
+| /api/orders         | POST   | Yeni bir sipariş oluşturur.          |
+| /api/orders/{order} | PUT    | Siparişi günceller.                  |
